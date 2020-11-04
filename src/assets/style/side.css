@@ -1,0 +1,392 @@
+.side-right-box {
+    width: 100%;
+    height: 100%;
+    background: #FFFFFF;
+}
+
+.side-header {
+    width: 100%;
+    height: 44px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header-item {
+    cursor: pointer;
+    width: 40%;
+    height: 100%;
+    text-align: center;
+    line-height: 44px;
+}
+
+.active {
+    color: #1A63FF;
+    border-bottom: 2px solid #1A63FF;
+}
+
+.active .header-svg {
+    color: #1A63FF;
+}
+
+.icon-form-five {
+    cursor: pointer;
+    margin-left: 35px;
+    font-size: 18px;
+}
+
+.setUp-box {
+    width: 100%;
+    height: calc(100% - 44px);
+    overflow-y: auto;
+}
+
+.setUp-data {
+    width: 100%;
+    height: 100%;
+    padding: 18px 14px;
+    box-sizing: border-box;
+}
+
+.setUp-item {
+    margin-bottom: 16px;
+}
+
+.release-title {
+    height: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.release-title .icon-i {
+    display: inline-block;
+    width: 4px;
+    height: 15px;
+    background: rgba(26, 99, 255, 1);
+    border-radius: 2px;
+}
+
+.release-title .main-span {
+    margin-left: 8px;
+    font-size: 16px;
+}
+
+.setUp-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setUp-transfer {
+    flex-wrap: wrap;
+}
+
+.select-label {
+    display: inline-block;
+    width: 20%;
+}
+
+.setUp-select .el-select {
+    width: 76%;
+}
+
+.setUp-select .el-select .el-input__inner {
+    height: 32px;
+}
+
+.setUp-select .el-select .el-input__suffix .el-input__icon {
+    line-height: 32px;
+}
+
+.transfer-item {
+    width: 100%;
+    position: relative;
+}
+
+.transfer-item:first-child {
+    margin-bottom: 20px;
+}
+
+.transfer-check {
+    width: 200px;
+    height: 139px;
+    padding: 10px 14px;
+    margin: 0 auto;
+    border: 1px solid #E2E2E2;
+    overflow-y: auto;
+}
+
+.transfer-check .el-checkbox {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.transfer-title {
+    float: left;
+    font-size: 14px;
+    color: #343434;
+}
+
+.change-btn {
+    width: 22px;
+    position: absolute;
+    right: 0px;
+    top: 64px;
+}
+
+.change-btn .el-button {
+    width: 100%;
+    height: 14px;
+    padding: 0px;
+    background: #DEDEDE;
+    border: none;
+}
+
+.change-btn .el-button:hover {
+    background: #89AEFF;
+}
+
+.icon-rest,
+.icon-develop {
+    font-size: 12px;
+    color: #fff;
+}
+
+.change-btn .el-button+.el-button {
+    margin-left: 0px;
+}
+
+.change-btn .actShow {
+    background: #5088FF;
+}
+
+.change-btn .el-button.is-disabled:hover {
+    background: #DEDEDE;
+}
+
+.setUp-input,
+.padding-botm {
+    margin-bottom: 14px;
+}
+
+.setUp-input {
+    flex-wrap: wrap;
+}
+
+.setUp-input .el-input {
+    width: 76%;
+}
+
+.setUp-input .el-input .el-input__inner {
+    height: 32px;
+}
+
+.setUp-input .el-row {
+    width: 100%;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.setUp-input .el-row:last-child {
+    margin-bottom: 0px;
+}
+
+.setUp-input .el-row .el-col-6:last-child .select-label {
+    padding-left: 10px;
+}
+
+.setUp-input .el-col-6 {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.setUp-input .el-col-6 .select-label {
+    width: 48%;
+}
+
+.setUp-input .el-col-6:last-child .select-label {
+    padding-left: 10px;
+}
+
+.setUp-input .el-col-6 .el-color-picker {
+    width: 52%;
+    height: 32px;
+}
+
+.setUp-input .el-col-6 .el-color-picker .el-color-picker__trigger {
+    width: 100%;
+    height: 100%;
+}
+
+.setUp-input .el-col-6 .el-color-picker .el-color-picker__color {
+    border: none;
+}
+
+.setUp-input .el-col-6 .el-input {
+    width: 52%;
+}
+
+.setUp-input .el-col-6 .el-select {
+    width: 52%;
+}
+
+.setUp-input .el-col-6 .el-select .el-input {
+    width: 100%;
+}
+
+.button-node-item {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.btn-item-box {
+    cursor: pointer;
+}
+
+.btn-item-box:hover {
+    color: #1A63FF;
+}
+
+.btn-item-box:last-child {
+    margin-left: 20px;
+}
+
+.has-fuse-node {
+    width: 100%;
+    height: 300px;
+    border: 1px solid rgba(225, 225, 225, 1);
+    border-radius: 3px;
+    margin-top: 8px;
+}
+
+.field-type {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(225, 225, 225, 1);
+}
+
+.field-type-node {
+    height: calc(100% - 35px);
+    overflow-y: auto;
+}
+
+.field-type-title,
+.button-node-title {
+    color: #343434
+}
+
+.field-type-title,
+.field-type-item {
+    display: inline-block;
+    width: 33.3%;
+    height: 100%;
+    text-align: center;
+    line-height: 35px;
+}
+
+.field-type-title:first-child {
+    border-right: 1px solid rgba(225, 225, 225, 1);
+}
+
+.field-type-title:nth-of-type(2) {
+    border-right: 1px solid rgba(225, 225, 225, 1);
+}
+
+.field-type-item:first-child {
+    border-right: 1px solid rgba(225, 225, 225, 1);
+}
+
+.field-type-item:nth-of-type(2) {
+    border-right: 1px solid rgba(225, 225, 225, 1);
+}
+
+.field-type-item .el-input,
+.field-type-item .el-select {
+    height: 100%;
+}
+
+.field-type-item .el-input__inner {
+    border-radius: 0px;
+    height: 85%;
+    border: none;
+}
+
+.actNum {
+    background: #F3F6FC;
+}
+
+.actNum .el-input__inner {
+    background: #F3F6FC;
+}
+
+.setUp-style {
+    width: 100%;
+    height: 100%;
+}
+
+.setUp-style .el-collapse-item__header {
+    background: #F3F7FF;
+    padding: 0px 14px;
+    height: 34px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+}
+
+.setUp-style .el-collapse-item__header .icon-right {
+    margin-right: 6px;
+}
+
+.setUp-style .el-collapse-item__arrow {
+    display: none;
+}
+
+.setUp-style .el-collapse-item__header.is-active .icon-right {
+    transform: rotate(90deg);
+}
+
+.setUp-style-item {
+    padding: 0px 14px;
+}
+
+.setUp-style-item:first-child {
+    padding-top: 10px
+}
+
+.setUp-style .el-collapse-item__content {
+    padding-bottom: 6px;
+}
+
+.switch-col {
+    justify-content: flex-start !important;
+}
+
+.setUp-select .el-color-picker {
+    width: 76%;
+}
+
+.setUp-select .el-color-picker .el-color-picker__trigger {
+    width: 100%;
+}
+
+
+/* .setUp-select .el-input-number__decrease,
+.el-input-number__increase {
+    width: 26px;
+    height: 30px;
+    border-radius: 2px 0 0 2px;
+}
+
+.setUp-select .el-input-number__decrease,
+.el-input-number__increase {
+
+} */
