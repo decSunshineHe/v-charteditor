@@ -56,16 +56,20 @@
           </div>
         </div>
         <div class="right-main-box">
-          <table-designer
-            :sheetData="sheetData"
-            v-show="isShowChart == 0"
-          ></table-designer>
-          <chart-designer
-            v-show="isShowChart == 1"
-            :chartList="chartList"
-            :chartIndex="chartIndex"
-            @selectChart="selectChart"
-          ></chart-designer>
+          <keep-alive>
+            <table-designer
+              :sheetData="sheetData"
+              v-if="isShowChart == 0"
+            ></table-designer>
+          </keep-alive>
+          <keep-alive>
+            <chart-designer
+              v-if="isShowChart == 1"
+              :chartList="chartList"
+              :chartIndex="chartIndex"
+              @selectChart="selectChart"
+            ></chart-designer>
+          </keep-alive>
         </div>
         <div class="add-select-chart" v-if="isShowChart == 1">
           <el-dropdown @command="handleCommand">
@@ -79,12 +83,14 @@
           </el-dropdown>
         </div>
       </div>
-      <div class="right-config-box" v-if="showSide">
+      <div class="right-config-box" v-show="showSide">
         <chart-config
           :type="chartInfo.type"
           :sheetData="sheetData"
-          :chartStyle="chartInfo.style"
           :chartData="chartInfo.data"
+          :chartForm="chartInfo.form"
+          :chartStyle="chartInfo.style"
+          @setChartData="setChartData"
           @setChartStyle="setChartStyle"
           @closeSide="closeSide"
         ></chart-config>
@@ -99,6 +105,7 @@ import EventBus from "../bus/eventBus";
 import TableDesigner from "./make-table/table-designer";
 import ChartDesigner from "./make-chart/chart-designer";
 import ChartConfig from "./make-chart/chart-config";
+import { BarData } from "../default/barData.js";
 export default {
   components: {
     TableDesigner,
@@ -157,15 +164,23 @@ export default {
       this.chartIndex = val;
       this.chartInfo = this.chartList[val];
     },
+    //设置图表样式
     setChartStyle(val) {
       this.$set(this.chartList[this.chartIndex].style, val.key, val.value);
       this.$set(this.chartList, this.chartIndex, this.chartInfo);
     },
+    //设置图表数据
+    setChartData(val) {
+      this.$set(this.chartList[this.chartIndex], "data", val.source);
+      this.$set(this.chartList[this.chartIndex], "form", val.form);
+      this.$set(this.chartList, this.chartIndex, this.chartInfo);
+    },
     //新建
     handleCommand(command) {
-      this.chartList.unshift({ type: command, data: [], style: {} });
-      this.chartIndex = 0;
-      this.chartInfo = this.chartList[0];
+      this.chartIndex = this.chartList.length;
+      this.chartInfo = JSON.parse(JSON.stringify(BarData));
+      this.chartInfo.id = this.chartList.length;
+      this.chartList.push(this.chartInfo);
     },
     //上传数据
     httpRequest(inputfile) {

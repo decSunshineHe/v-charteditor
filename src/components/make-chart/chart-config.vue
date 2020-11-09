@@ -14,21 +14,22 @@
       <i class="iconfont icon-form-five" @click="backClose"></i>
     </div>
     <div class="setUp-box" v-show="isAct == 0">
-      <!-- <table-data v-if="chartInfo.type == 'table'"></table-data> -->
-      <bar-data v-if="type == 'bar'" :sheetData="sheetData"></bar-data>
+      <bar-data
+        v-if="type == 'bar'"
+        :sheetData="sheetData"
+        :chartForm="chartForm"
+        @setChartData="setChartData"
+      ></bar-data>
       <line-data v-if="type == 'line'"></line-data>
     </div>
     <div class="setUp-box" v-show="isAct == 1">
       <bar-style
         v-if="type == 'bar'"
+        :chartData="chartData"
         :chartStyle="chartStyle"
         @setStyle="setStyle"
       ></bar-style>
-      <line-style
-        v-if="type == 'line'"
-        :chartStyle="chartStyle"
-        @setStyle="setStyle"
-      ></line-style>
+      <line-style v-if="type == 'line'" @setStyle="setStyle"></line-style>
     </div>
   </div>
 </template>
@@ -43,7 +44,9 @@ import TableStyle from "../table/table-data";
 export default {
   components: { LineData, LineStyle, BarData, BarStyle, TableData, TableStyle },
   props: {
+    chartData: {},
     chartStyle: {},
+    chartForm: {},
     type: { type: String },
     sheetData: {},
   },
@@ -72,7 +75,9 @@ export default {
     setStyle(val) {
       this.$emit("setChartStyle", val);
     },
-    initChartData(val) {},
+    setChartData(val) {
+      this.$emit("setChartData", val);
+    },
   },
 };
 </script>

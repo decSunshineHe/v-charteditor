@@ -6,13 +6,14 @@
 </template>
 <script>
 import { EleResize } from "../../utils/esresize";
+import EventBus from "../../bus/eventBus";
 import echarts from "echarts";
 export default {
   props: {
-    data: {
+    info: {
       type: Object,
       default: () => {
-        return {};
+        return [];
       },
     },
     index: {
@@ -24,6 +25,15 @@ export default {
     return {
       name: "柱状图",
       actNum: -1,
+      predefineColors: [
+        "#80A9FF",
+        "#64E5BC",
+        "#ffd700",
+        "#90ee90",
+        "#00ced1",
+        "#1e90ff",
+        "#c71585",
+      ],
       xAxisData: [
         "2010",
         "2011",
@@ -35,17 +45,25 @@ export default {
         "2017",
         "2018",
       ],
-      seriesData: [
-        [80, 53, 68, 82, 87, 80, 82, 60, 78],
-        [40, 20, 55, 62, 45, 36, 48, 38, 60],
+      series: [
+        {
+          name: "甲方",
+          type: "bar",
+          data: [80, 53, 68, 82, 87, 80, 82, 60, 78],
+          barWidth: 24,
+          itemStyle: {
+            color: "#80A9FF",
+          },
+        },
       ],
+      legendData: ["甲方", "乙方"],
       titleText: "柱状图",
       titleColor: "#666666",
       titleFamily: "sans-serif",
       titleStyle: "normal",
       titleSize: 20,
       gridTop: 40,
-      gridLeft: 30,
+      gridLeft: 50,
       gridRight: 30,
       gridBottom: 60,
       legendShow: true,
@@ -101,7 +119,7 @@ export default {
             bottom: this.gridBottom,
           },
           legend: {
-            data: ["甲方", "乙方"],
+            data: this.legendData,
             textStyle: {
               color: this.legendColor,
               fontFamily: this.legendFamily,
@@ -146,8 +164,8 @@ export default {
           },
           yAxis: [
             {
-              
               name: this.yAxisName,
+              type: "value",
               nameLocation: "end", // 轴名称相对位置value
               nameTextStyle: {
                 color: this.yAxisNameColor,
@@ -175,54 +193,51 @@ export default {
               },
             },
           ],
-          series: [
-            {
-              name: "甲方",
-              type: "bar",
-              data: this.seriesData[0],
-              barWidth: 24,
-              itemStyle: {
-                color: "#80A9FF",
-              },
-            },
-            {
-              name: "乙方",
-              type: "bar",
-              data: this.seriesData[1],
-              barWidth: 24,
-              itemStyle: {
-                color: "#64E5BC",
-              },
-            },
-          ],
+          series: this.series,
         };
       },
-      set: function (newval) {},
+      set: function (val) {},
+    },
+  },
+  watch: {
+    info: {
+      handler(newVal) {
+        this.changeData(newVal);
+      },
+      deep: true,
+      //immediate: true,
     },
   },
   mounted() {
-    this.drawLoginBar(this.option);
-  },
-  watch: {
-    data: {
-      handler(newval) {
-        if (newval) {
-          this.changeData(newval);
-        }
-      },
-      deep: true,
-      immediate: true,
-    },
+    this.changeData(this.info);
   },
   methods: {
     changeData(val) {
+      if (
+        val.data.xAxisData &&
+        val.data.name &&
+        this.legendData != val.data.name
+      ) {
+        this.series = [];
+        this.xAxisData = val.data.xAxisData;
+        for (let a = 0; a < val.data.name.length; a++) {
+          this.$set(this.series, a, {
+            name: val.data.series[a].name,
+            type: "bar",
+            data: val.data.series[a].data,
+            barWidth: 24,
+            itemStyle: { color: this.predefineColors[a] },
+          });
+        }
+        this.legendData = val.data.name;
+        this.drawBar(true);
+      }
       if (val.style.basic) {
         this.titleText = val.style.basic.title;
         this.titleColor = val.style.basic.titleColor;
         this.titleStyle = val.style.basic.titleStyle;
         this.titleFamily = val.style.basic.titleFamily;
         this.titleSize = val.style.basic.titleSize;
-        this.drawLoginBar();
       }
       if (val.style.senior) {
         this.gridTop = val.style.senior.gridTop;
@@ -234,7 +249,6 @@ export default {
         this.legendStyle = val.style.senior.legendStyle;
         this.legendFamily = val.style.senior.legendFamily;
         this.legendSize = val.style.senior.legendSize;
-        this.drawLoginBar();
       }
       if (val.style.xForm) {
         this.xAxisLineColor = val.style.xForm.axisColor;
@@ -248,7 +262,6 @@ export default {
         this.xAxisLabelFamily = val.style.xForm.labelFamily;
         this.xAxisLabelSize = val.style.xForm.labelSize;
         this.xAxisLabelRotate = val.style.xForm.labelRotate;
-        this.drawLoginBar();
       }
       if (val.style.yForm) {
         this.yAxisLineColor = val.style.yForm.axisColor;
@@ -262,8 +275,14 @@ export default {
         this.yAxisLabelFamily = val.style.yForm.labelFamily;
         this.yAxisLabelSize = val.style.yForm.labelSize;
         this.yAxisLabelRotate = val.style.yForm.labelRotate;
-        this.drawLoginBar();
       }
+      if (val.style.barList) {
+        val.style.barList.forEach((item, index) => {
+          this.series[index].barWidth = item.barWidth;
+          this.series[index].itemStyle.color = item.barColor;
+        });
+      }
+      this.drawBar();
     },
     // 图表自适应
     resizeChart(eleDiv, ele) {
@@ -272,17 +291,24 @@ export default {
       };
       EleResize.on(eleDiv, listener);
     },
-    showTableItem() {
-      this.chartsData.splice(this.actNum, 1);
-    },
-    actTable(item, index) {
-      this.actNum = index;
-    },
-    drawLoginBar() {
+    //绘制图表
+    drawBar(needClear) {
       let barChartDiv = document.getElementById(`barChart${this.index}`);
-      let barChart = this.$echarts.init(barChartDiv);
-      barChart.setOption(this.option);
-      this.resizeChart(barChartDiv, barChart);
+      if (barChartDiv) {
+        let barChart = this.$echarts.init(barChartDiv);
+        if (needClear) {
+          barChart.clear();
+        }
+        barChart.setOption(this.option, true);
+        this.resizeChart(barChartDiv, barChart);
+      } else {
+        this.$nextTick(function () {
+          barChartDiv = document.getElementById(`barChart${this.index}`);
+          let barChart = this.$echarts.init(barChartDiv);
+          barChart.setOption(this.option, true);
+          this.resizeChart(barChartDiv, barChart);
+        });
+      }
     },
   },
 };

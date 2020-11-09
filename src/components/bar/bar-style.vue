@@ -14,14 +14,15 @@
           </div>
           <div class="setUp-select setUp-input">
             <span class="select-label">标题内容</span>
-            <el-input
-              v-model="basicsForm.title"
-              placeholder="请输入内容"
-            ></el-input>
+            <el-input v-model="basic.title" placeholder="请输入内容"></el-input>
           </div>
           <div class="setUp-select padding-botm">
             <span class="select-label">字体</span>
-            <el-select v-model="basicsForm.titleFamily" placeholder="请选择" :popper-append-to-body="false">
+            <el-select
+              v-model="basic.titleFamily"
+              placeholder="请选择"
+              :popper-append-to-body="false"
+            >
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -30,14 +31,21 @@
               ></el-option>
             </el-select>
           </div>
+          
           <div class="setUp-select setUp-input">
             <el-col :span="6">
               <span class="select-label">文字大小</span>
-              <el-input v-model="basicsForm.titleSize"></el-input>
+              <el-input-number
+                class="small-input-number"
+                size="small"
+                v-model="basic.titleSize"
+                :min="20"
+                :max="30"
+              ></el-input-number>
             </el-col>
             <el-col :span="6">
               <span class="select-label">字体样式</span>
-              <el-select v-model="basicsForm.titleStyle">
+              <el-select v-model="basic.titleStyle">
                 <el-option
                   v-for="item in fontStyleOptions"
                   :key="item.value"
@@ -50,7 +58,7 @@
           <div class="setUp-select padding-botm">
             <span class="select-label">文字颜色</span>
             <el-color-picker
-              v-model="basicsForm.titleColor"
+              v-model="basic.titleColor"
               :predefine="predefineColors"
             ></el-color-picker>
           </div>
@@ -64,21 +72,21 @@
             <el-row>
               <el-col :span="6">
                 <span class="select-label">X</span>
-                <el-input v-model="basicsForm.xValue"></el-input>
+                <el-input v-model="basic.xValue"></el-input>
               </el-col>
               <el-col :span="6">
                 <span class="select-label">Y</span>
-                <el-input v-model="basicsForm.yValue"></el-input>
+                <el-input v-model="basic.yValue"></el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
                 <span class="select-label">宽度</span>
-                <el-input v-model="basicsForm.width"></el-input>
+                <el-input v-model="basic.width"></el-input>
               </el-col>
               <el-col :span="6">
                 <span class="select-label">高度</span>
-                <el-input v-model="basicsForm.height"></el-input>
+                <el-input v-model="basic.height"></el-input>
               </el-col>
             </el-row>
           </div>
@@ -98,21 +106,21 @@
             <el-row>
               <el-col :span="6">
                 <span class="select-label">上边距</span>
-                <el-input v-model="seniorForm.gridTop"></el-input>
+                <el-input v-model="senior.gridTop"></el-input>
               </el-col>
               <el-col :span="6">
                 <span class="select-label">下边距</span>
-                <el-input v-model="seniorForm.gridBottom"></el-input>
+                <el-input v-model="senior.gridBottom"></el-input>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
                 <span class="select-label">左边距</span>
-                <el-input v-model="seniorForm.gridLeft"></el-input>
+                <el-input v-model="senior.gridLeft"></el-input>
               </el-col>
               <el-col :span="6">
                 <span class="select-label">右边距</span>
-                <el-input v-model="seniorForm.gridRight"></el-input>
+                <el-input v-model="senior.gridRight"></el-input>
               </el-col>
             </el-row>
           </div>
@@ -126,11 +134,11 @@
             <el-row>
               <el-col :span="6" class="switch-col">
                 <span class="select-label">显示图例</span>
-                <el-switch v-model="seniorForm.legend"></el-switch>
+                <el-switch v-model="senior.legend"></el-switch>
               </el-col>
               <el-col :span="6">
                 <span class="select-label">排列方式</span>
-                <el-select v-model="seniorForm.orient" placeholder="请选择">
+                <el-select v-model="senior.orient" placeholder="请选择">
                   <el-option
                     v-for="item in orientOptions"
                     :key="item.value"
@@ -144,22 +152,24 @@
               <el-col :span="6">
                 <span class="select-label">文字颜色</span>
                 <el-color-picker
-                  v-model="seniorForm.legendColor"
+                  v-model="senior.legendColor"
                   :predefine="predefineColors"
                 ></el-color-picker>
               </el-col>
               <el-col :span="6">
                 <span class="select-label">文字大小</span>
-                <el-input v-model="seniorForm.legendSize"></el-input>
+                <el-input-number
+                  size="small"
+                  v-model="senior.legendSize"
+                  :min="10"
+                  :max="20"
+                ></el-input-number>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="6">
                 <span class="select-label">字体</span>
-                <el-select
-                  v-model="seniorForm.legendFamily"
-                  placeholder="请选择"
-                >
+                <el-select v-model="senior.legendFamily" placeholder="请选择">
                   <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -170,10 +180,7 @@
               </el-col>
               <el-col :span="6">
                 <span class="select-label">字体样式</span>
-                <el-select
-                  v-model="seniorForm.legendStyle"
-                  placeholder="请选择"
-                >
+                <el-select v-model="senior.legendStyle" placeholder="请选择">
                   <el-option
                     v-for="item in fontStyleOptions"
                     :key="item.value"
@@ -212,6 +219,7 @@
               <el-col :span="6">
                 <span class="select-label">文字大小</span>
                 <el-input-number
+                  size="small"
                   v-model="xForm.nameSize"
                   :min="10"
                   :max="20"
@@ -264,7 +272,12 @@
               </el-col>
               <el-col :span="6">
                 <span class="select-label">文字大小</span>
-                <el-input v-model="xForm.labelSize"></el-input>
+                <el-input-number
+                  size="small"
+                  v-model="xForm.labelSize"
+                  :min="10"
+                  :max="20"
+                ></el-input-number>
               </el-col>
             </el-row>
             <el-row>
@@ -326,7 +339,12 @@
               </el-col>
               <el-col :span="6">
                 <span class="select-label">文字大小</span>
-                <el-input v-model="yForm.nameSize"></el-input>
+                <el-input-number
+                  size="small"
+                  v-model="yForm.nameSize"
+                  :min="10"
+                  :max="20"
+                ></el-input-number>
               </el-col>
             </el-row>
             <el-row>
@@ -374,8 +392,13 @@
                 <el-input v-model="yForm.labelRotate"></el-input>
               </el-col>
               <el-col :span="6">
-                <span class="select-label">文字大小</span>
-                <el-input v-model="yForm.labelSize"></el-input>
+                <span class="select-label">文字大小sss</span>
+                <el-input-number
+                  size="small"
+                  v-model="yForm.labelSize"
+                  :min="10"
+                  :max="20"
+                ></el-input-number>
               </el-col>
             </el-row>
             <el-row>
@@ -412,31 +435,67 @@
           </div>
         </div>
       </el-collapse-item>
+      <el-collapse-item name="5" v-if="barList.length">
+        <template slot="title">
+          <i class="iconfont icon-right"></i>
+          其他样式
+        </template>
+        <div
+          class="setUp-style-item setUp-item"
+          v-for="(item, index) in barList"
+          :key="index"
+        >
+          <div class="release-title">
+            <i class="icon-i"></i>
+            <span class="main-span">{{ item.barName }}</span>
+          </div>
+          <div class="setUp-select setUp-input">
+            <el-row>
+              <el-col :span="6" class="switch-col">
+                <span class="select-label">显示标注</span>
+                <el-switch v-model="item.barLabel"></el-switch>
+              </el-col>
+              <el-col :span="6">
+                <span class="select-label">柱宽</span>
+                <el-input v-model="item.barWidth"></el-input>
+              </el-col>
+            </el-row>
+          </div>
+          <div class="setUp-select padding-botm">
+            <span class="select-label">柱体颜色</span>
+            <el-color-picker
+              v-model="item.barColor"
+              :predefine="predefineColors"
+            ></el-color-picker>
+          </div>
+        </div>
+      </el-collapse-item>
     </el-collapse>
   </div>
 </template>
 <script>
+import EventBus from "../../bus/eventBus";
 import { limit } from "../../utils/limit.js";
 export default {
-  props: ["chartStyle"],
+  props: ["chartData", "chartStyle"],
   data() {
     return {
-      activeNames: ["1", "2"],
-      basicsForm: {
-        title: "",
+      activeNames: ["1"],
+      basic: {
+        title: "柱状图",
         titleFamily: "Microsoft YaHei",
         titleStyle: "normal",
         titleSize: 20,
-        titleColor: "#80A9FF",
+        titleColor: "#666666",
         xValue: "",
         yValue: "",
         width: "",
         height: "",
       },
-      seniorForm: {
+      senior: {
         gridTop: 40,
         gridBottom: 60,
-        gridLeft: 30,
+        gridLeft: 50,
         gridRight: 30,
         legend: true,
         orient: "horizontal",
@@ -475,6 +534,7 @@ export default {
         labelStyle: "normal",
         labelRotate: 0,
       },
+      barList: [],
       orientOptions: [
         {
           label: "水平",
@@ -518,8 +578,8 @@ export default {
         },
       ],
       predefineColors: [
-        "#ff4500",
-        "#ff8c00",
+        "#80A9FF",
+        "#64E5BC",
         "#ffd700",
         "#90ee90",
         "#00ced1",
@@ -528,43 +588,126 @@ export default {
       ],
     };
   },
-  created() {},
+  mounted() {
+    this.initStyle(this.chartStyle);
+  },
   methods: {
-    commit(key, val) {
+    //提交样式设置
+    commitStyle(key, val) {
       this.$emit("setStyle", { key: key, value: val });
+    },
+    //初始化样式
+    initStyle(val) {
+      for (let key in val) {
+        this.$data[key] = val[key];
+      }
     },
   },
   watch: {
-    basicsForm: {
+    chartStyle: {
       handler(newVal) {
-        this.$emit("setStyle", { key: "basic", value: newVal });
+        if (newVal) {
+          this.initStyle(newVal);
+        }
       },
       deep: true,
-      immediate: true,
     },
-    seniorForm: {
+    chartData: {
       handler(newVal) {
-        this.$emit("setStyle", { key: "senior", value: newVal });
+        if (newVal && newVal.name) {
+          let prevBarList = JSON.parse(JSON.stringify(this.barList));
+          let prevNameList = prevBarList.map((v) => v.barName);
+          this.barList = [];
+          //实时删除柱子，每次只会删除一类
+          if (prevBarList.length > newVal.name.length) {
+            newVal.name.forEach((val, index) => {
+              let prevIndex = prevNameList.indexOf(val);
+              if (prevIndex > -1) {
+                this.barList.push(prevBarList[prevIndex]);
+              }
+            });
+          }
+          //确定-批量新增柱子，每次可以新增多类
+          else {
+            let exsitColors = [];
+            //第一次遍历，如果上一次barList中存在这一条，则保留,记住上一次的颜色设置
+            newVal.name.forEach((val, index) => {
+              let prevIndex = prevNameList.indexOf(val);
+              if (prevIndex > -1) {
+                this.barList.push(prevBarList[prevIndex]);
+                exsitColors.push(prevBarList[prevIndex].barColor);
+              }
+            });
+            let remainColors = this.predefineColors.filter(
+              (item) => !exsitColors.includes(item)
+            );
+            let count = 0;
+            //第二次遍历，如果上一次barList中不存在这一条，则新增，从预定义颜色列表中获取未使用过的颜色
+            newVal.name.forEach((val, index) => {
+              let prevIndex = prevNameList.indexOf(val);
+              if (prevIndex == -1) {
+                this.barList.push({
+                  barName: val,
+                  barColor: remainColors[count++],
+                  barLabel: false,
+                  barWidth: 24,
+                });
+              }
+            });
+          }
+        } else {
+          this.barList = [];
+        }
       },
       deep: true,
-      immediate: true,
+    },
+    basic: {
+      handler(newVal) {
+        this.commitStyle("basic", newVal);
+      },
+      deep: true,
+    },
+    senior: {
+      handler(newVal) {
+        this.commitStyle("senior", newVal);
+      },
+      deep: true,
     },
     xForm: {
       handler(newVal) {
-        this.$emit("setStyle", { key: "xForm", value: newVal });
+        this.commitStyle("xForm", newVal);
       },
       deep: true,
-      immediate: true,
     },
     yForm: {
       handler(newVal) {
-        this.$emit("setStyle", { key: "yForm", value: newVal });
+        this.commitStyle("yForm", newVal);
       },
       deep: true,
-      immediate: true,
+    },
+    barList: {
+      handler(newVal) {
+        this.commitStyle("barList", newVal);
+      },
+      deep: true,
     },
   },
 };
 </script>
 <style lang="">
+  .setUp-input .el-input-number.small-input-number {
+    width: 80px;
+  }
+  .setUp-input .el-input-number.small-input-number .el-input-number__decrease,
+  .setUp-input .el-input-number.small-input-number .el-input-number__increase {
+    width: 24px;
+  }
+  .setUp-input .el-input-number.small-input-number .el-input.el-input--small {
+    width: 100%;
+  }
+  .setUp-input .el-input-number.small-input-number .el-input.el-input--small .el-input__inner {
+    padding-left: 26px;
+    padding-right: 26px;
+    line-height: 33px;
+  }
 </style>
