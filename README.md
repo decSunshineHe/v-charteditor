@@ -1,6 +1,6 @@
 # v-charteditor
 
-> v-charteditor
+`v-charteditor` 是一款基于 `Vue.js 2.0` 和 `echarts` 的统计图表编辑器，支持上传excel数据，用来在线实时制作如柱状图、折线图、饼状图等统计图表
 
 ## Build Setup
 
