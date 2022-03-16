@@ -100,8 +100,10 @@
 </template>
 <script>
 import XLSX from "xlsx";
-import { exchange } from "../utils/exchange";
-import EventBus from "../bus/eventBus";
+import XStyle from "xlsx-style";
+import Exchange from "xlsx-exchange";
+// import { exchange } from "../utils/exchange";
+// import EventBus from "../bus/eventBus";
 import TableDesigner from "./make-table/table-designer";
 import ChartDesigner from "./make-chart/chart-designer";
 import ChartConfig from "./make-chart/chart-config";
@@ -110,7 +112,7 @@ export default {
   components: {
     TableDesigner,
     ChartDesigner,
-    ChartConfig,
+    ChartConfig
   },
   data() {
     return {
@@ -122,28 +124,28 @@ export default {
         showGrid: true,
         showContextmenu: true,
         row: {
-          height: 25,
+          height: 25
         },
         col: {
-          width: 100,
-        },
+          width: 100
+        }
       },
       tabsData: [
         {
           label: "表格",
           className: "form-two",
-          value: "bg",
+          value: "bg"
         },
         {
           label: "图表",
           className: "form-one",
-          value: "tb",
-        },
+          value: "tb"
+        }
       ],
       chartList: [],
       chartInfo: {},
       chartIndex: -1,
-      sheetData: {},
+      sheetData: {}
     };
   },
   methods: {
@@ -187,13 +189,13 @@ export default {
       let file = inputfile.file;
       var reader = new FileReader();
       let that = this;
-      reader.onload = function (e) {
+      reader.onload = function(e) {
         var data = e.target.result;
-        var workbook = XLSX.read(data, { type: "binary" });
-        let out = exchange.stox(workbook);
-        that.reportForm.data = JSON.stringify(out);
+        var wbs = XStyle.read(data, { type: "binary", cellStyles: true });
+        var wb = XLSX.read(data, { type: "binary", cellStyles: true });
+        //stox中第二个参数为非必传
+        let out = Exchange.stox(wbs, wb);
         that.sheetData = out;
-        console.log("输出数据", out);
       };
       reader.readAsBinaryString(file);
     },
@@ -204,9 +206,9 @@ export default {
     //限制文件个数
     handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
-          files.length + fileList.length
-        } 个文件`
+        `当前限制选择 1 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       );
     },
     //保存报表
@@ -288,8 +290,8 @@ export default {
     handleExport() {
       // var new_wb = exchange.xtos(this.sheet.getData());
       // XLSX.writeFile(new_wb, "SheetJS.xlsx");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -308,4 +310,3 @@ export default {
   border-radius: 4px;
 }
 </style>
-
